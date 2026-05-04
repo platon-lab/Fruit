@@ -28,7 +28,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            touch-action: none; /* Prevent scroll on mobile */
+            touch-action: none;
         }
 
         @keyframes gradientBG {
@@ -37,7 +37,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glassmorphism Styles */
         .glass {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
@@ -57,7 +56,6 @@
             flex-direction: column;
         }
 
-        /* Character Selection */
         #menu {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -70,20 +68,20 @@
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            font-size: 2rem;
+            margin-bottom: 20px;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
         .heroes-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 15px;
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
         }
 
         .hero-btn {
@@ -101,10 +99,8 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        .hero-btn:hover, .hero-btn:active {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-            border-color: rgba(0, 255, 255, 0.8);
+        .hero-btn:active {
+            transform: scale(0.95);
         }
 
         .hero-name {
@@ -113,43 +109,45 @@
             background: rgba(0,0,0,0.6);
             padding: 4px 12px;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 900;
         }
 
-        /* Game UI */
+        /* ОНОВЛЕНИЙ МАЛИЙ ІНТЕРФЕЙС */
         #game-ui {
             display: none;
             flex-direction: column;
             height: 100%;
-            padding: 10px;
+            padding: 5px;
         }
 
         .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
-            padding: 40px;
-            margin-bottom: 10px;
+            padding: 8px 15px; /* Зменшено відступи */
+            margin-bottom: 5px;
             z-index: 10;
+            border-radius: 15px;
         }
 
         .score-board {
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         .score-title {
-            font-size: 0.8rem;
+            font-size: 0.65rem; /* Зменшено шрифт */
             color: #aaa;
             text-transform: uppercase;
         }
 
         .score-value {
-            font-size: 1.8rem;
+            font-size: 1.2rem; /* Зменшено шрифт */
             font-weight: 900;
             color: #0ff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
         }
 
         .next-preview {
@@ -159,23 +157,21 @@
         }
 
         #next-canvas {
-            width: 60px;
-            height: 60px;
+            width: 40px; /* Зменшено превью */
+            height: 40px;
             border-radius: 50%;
             background: rgba(0,0,0,0.3);
-            border: 2px solid rgba(255,255,255,0.2);
-            margin-top: 5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-top: 2px;
         }
 
         .canvas-container {
             flex-grow: 1;
             position: relative;
             width: 100%;
-            border-bottom-left-radius: 24px;
-            border-bottom-right-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
             border: 2px solid rgba(255,255,255,0.15);
-            border-top: none;
             background: rgba(0, 0, 0, 0.2);
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
         }
@@ -186,14 +182,12 @@
             height: 100%;
         }
 
-        /* Game Over Screen */
         #game-over {
             display: none;
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
             z-index: 200;
             flex-direction: column;
             justify-content: center;
@@ -208,9 +202,9 @@
         }
 
         .btn {
-            margin-top: 30px;
-            padding: 15px 40px;
-            font-size: 1.5rem;
+            margin-top: 20px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
             font-weight: bold;
             color: white;
             background: linear-gradient(45deg, #00f2fe 0%, #4facfe 100%);
@@ -218,7 +212,6 @@
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
-            transition: transform 0.1s;
         }
 
         .btn:active {
@@ -230,15 +223,11 @@
 <body>
 
 <div id="app">
-    <!-- Меню вибору -->
     <div id="menu" class="glass">
         <h1>Обери Героя</h1>
-        <div class="heroes-grid" id="heroes-container">
-            <!-- Кнопки генеруються JS -->
-        </div>
+        <div class="heroes-grid" id="heroes-container"></div>
     </div>
 
-    <!-- Гра -->
     <div id="game-ui">
         <div class="header glass">
             <div class="score-board">
@@ -259,7 +248,6 @@
         </div>
     </div>
 
-    <!-- Програш -->
     <div id="game-over">
         <h2>GAME OVER</h2>
         <p style="font-size: 1.5rem">Очки: <span id="final-score" style="color:#0ff; font-weight:bold;">0</span></p>
@@ -271,25 +259,23 @@
 <script>
     const heroes = ['Tito.png', 'Smartik.png', 'Junior.png', 'Fil.png', 'Milka.png', 'Bark.png'];
     
-    // Рівні кульок (радіус, значення)
     const levels = [
-        { r: 20, val: 2, color: 'rgba(255, 0, 0, 0.4)' },      // 0
-        { r: 30, val: 4, color: 'rgba(255, 128, 0, 0.4)' },    // 1
-        { r: 42, val: 8, color: 'rgba(255, 255, 0, 0.4)' },    // 2
-        { r: 55, val: 16, color: 'rgba(0, 255, 0, 0.4)' },     // 3
-        { r: 70, val: 32, color: 'rgba(0, 255, 255, 0.4)' },   // 4
-        { r: 85, val: 64, color: 'rgba(0, 0, 255, 0.4)' },     // 5
-        { r: 105, val: 128, color: 'rgba(128, 0, 255, 0.4)' }, // 6
-        { r: 130, val: 256, color: 'rgba(255, 0, 255, 0.4)' }, // 7
-        { r: 160, val: 512, color: 'rgba(255, 255, 255, 0.4)'},// 8
-        { r: 195, val: 1024, color: 'rgba(255, 215, 0, 0.6)' },// 9
-        { r: 240, val: 2048, color: 'rgba(255, 0, 0, 0.7)' }   // 10
+        { r: 20, val: 2, color: 'rgba(255, 0, 0, 0.4)' },
+        { r: 30, val: 4, color: 'rgba(255, 128, 0, 0.4)' },
+        { r: 42, val: 8, color: 'rgba(255, 255, 0, 0.4)' },
+        { r: 55, val: 16, color: 'rgba(0, 255, 0, 0.4)' },
+        { r: 70, val: 32, color: 'rgba(0, 255, 255, 0.4)' },
+        { r: 85, val: 64, color: 'rgba(0, 0, 255, 0.4)' },
+        { r: 105, val: 128, color: 'rgba(128, 0, 255, 0.4)' },
+        { r: 130, val: 256, color: 'rgba(255, 0, 255, 0.4)' },
+        { r: 160, val: 512, color: 'rgba(255, 255, 255, 0.4)'},
+        { r: 195, val: 1024, color: 'rgba(255, 215, 0, 0.6)' },
+        { r: 240, val: 2048, color: 'rgba(255, 0, 0, 0.7)' }
     ];
 
     let currentHeroImage = new Image();
     let isHeroLoaded = false;
 
-    // DOM Елементи
     const menuEl = document.getElementById('menu');
     const gameUiEl = document.getElementById('game-ui');
     const gameOverEl = document.getElementById('game-over');
@@ -299,8 +285,6 @@
     const nextCtx = nextCanvas.getContext('2d');
     
     let width, height;
-    
-    // Стан гри
     let balls = [];
     let score = 0;
     let highScore = localStorage.getItem('fruitMergeHighScore') || 0;
@@ -310,53 +294,46 @@
     let currentDropLevel = 0;
     let nextDropLevel = 0;
     let canDrop = true;
-    let isDropping = false;
     let animationFrameId;
     let isGameOver = false;
 
-    // Фізика
     const GRAVITY = 0.6;
-    const RESTITUTION = 0.2; // Відскок
+    const RESTITUTION = 0.2;
     const FRICTION = 0.98;
     
-    // Ініціалізація меню
     function initMenu() {
         const container = document.getElementById('heroes-container');
         container.innerHTML = '';
         heroes.forEach(hero => {
             const btn = document.createElement('div');
             btn.className = 'hero-btn';
-            
-            // Створюємо тимчасове зображення для меню, 
-            // якщо файлу немає, покаже просто назву красиво
             const name = hero.replace('.png', '');
-            btn.innerHTML = `
-                <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.2); font-size: 0.8rem;">[Фото ${name}]</div>
-                <div class="hero-name">${name}</div>
-            `;
+            btn.innerHTML = `<div class="hero-name">${name}</div>`;
             
-            // Спроба завантажити реальне фото на фон
             const img = new Image();
             img.src = hero;
             img.onload = () => {
                 btn.style.backgroundImage = `url(${hero})`;
                 btn.style.backgroundSize = 'cover';
                 btn.style.backgroundPosition = 'center';
-                btn.innerHTML = `<div class="hero-name">${name}</div>`;
             };
 
-            btn.onclick = () => startGameWithHero(hero);
+            btn.onclick = () => {
+                // ПОВНОЕКРАННИЙ РЕЖИМ ПРИ СТАРТІ[cite: 1]
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(e => console.log(e));
+                }
+                startGameWithHero(hero);
+            };
             container.appendChild(btn);
         });
     }
 
     function startGameWithHero(hero) {
         currentHeroImage.src = hero;
-        isHeroLoaded = true; // Навіть якщо не завантажиться фізично, малюємо fallback
-        
+        isHeroLoaded = true;
         menuEl.style.display = 'none';
         gameUiEl.style.display = 'flex';
-        
         resizeCanvas();
         resetGame();
     }
@@ -376,62 +353,42 @@
 
     class Ball {
         constructor(x, y, level, isStatic = false) {
-            this.x = x;
-            this.y = y;
-            this.level = level;
+            this.x = x; this.y = y; this.level = level;
             this.r = levels[level].r;
             this.val = levels[level].val;
-            this.vx = 0;
-            this.vy = 0;
-            this.isStatic = isStatic; // Для кульки, яку ми ще тримаємо
+            this.vx = 0; this.vy = 0;
+            this.isStatic = isStatic;
             this.markedForDeletion = false;
-            this.id = Math.random();
         }
 
         draw(context, x = this.x, y = this.y) {
             context.save();
             context.beginPath();
             context.arc(x, y, this.r, 0, Math.PI * 2);
-            context.closePath();
-            
-            // Тінь
-            context.shadowColor = 'rgba(0,0,0,0.5)';
-            context.shadowBlur = 10;
-            context.shadowOffsetX = 2;
-            context.shadowOffsetY = 5;
-
-            // Кліп для картинки
             context.clip();
 
-            // Малюємо фото героя
             if (isHeroLoaded && currentHeroImage.complete && currentHeroImage.naturalWidth > 0) {
-                // Масштабуємо щоб покрити коло
                 const s = this.r * 2;
                 context.drawImage(currentHeroImage, x - this.r, y - this.r, s, s);
             } else {
-                // Fallback якщо картинки немає
                 context.fillStyle = '#333';
                 context.fill();
             }
 
-            // Кольоровий оверлей для розрізнення рівнів
             context.fillStyle = levels[this.level].color;
             context.fill();
             
-            // Внутрішній відблиск (Glass)
             const gradient = context.createRadialGradient(x - this.r*0.3, y - this.r*0.3, this.r*0.1, x, y, this.r);
             gradient.addColorStop(0, 'rgba(255,255,255,0.4)');
             gradient.addColorStop(1, 'rgba(255,255,255,0)');
             context.fillStyle = gradient;
             context.fill();
 
-            // Бордер
             context.lineWidth = 2;
             context.strokeStyle = 'rgba(255,255,255,0.5)';
             context.stroke();
             context.restore();
 
-            // Малюємо цифру
             context.save();
             context.fillStyle = '#fff';
             context.strokeStyle = '#000';
@@ -446,42 +403,29 @@
 
         update() {
             if (this.isStatic) return;
-
             this.vy += GRAVITY;
             this.vx *= FRICTION;
             this.vy *= FRICTION;
-
             this.x += this.vx;
             this.y += this.vy;
 
-            // Стіни
-            if (this.x - this.r < 0) {
-                this.x = this.r;
-                this.vx *= -RESTITUTION;
-            } else if (this.x + this.r > width) {
-                this.x = width - this.r;
-                this.vx *= -RESTITUTION;
-            }
-
-            // Підлога
-            if (this.y + this.r > height) {
-                this.y = height - this.r;
-                this.vy *= -RESTITUTION;
-            }
+            if (this.x - this.r < 0) { this.x = this.r; this.vx *= -RESTITUTION; }
+            else if (this.x + this.r > width) { this.x = width - this.r; this.vx *= -RESTITUTION; }
+            if (this.y + this.r > height) { this.y = height - this.r; this.vy *= -RESTITUTION; }
         }
     }
 
     function generateRandomLevel() {
         const rand = Math.random();
-        if (rand < 0.5) return 0; // 2
-        if (rand < 0.85) return 1; // 4
-        return 2; // 8
+        if (rand < 0.5) return 0;
+        if (rand < 0.85) return 1;
+        return 2;
     }
 
     function updateNextPreview() {
         nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
         const dummyBall = new Ball(nextCanvas.width/2, nextCanvas.height/2, nextDropLevel, true);
-        dummyBall.r = 25; // Фіксований розмір для превью
+        dummyBall.r = 15; // Маленький розмір для малого UI
         dummyBall.draw(nextCtx);
     }
 
@@ -490,15 +434,12 @@
         nextDropLevel = generateRandomLevel();
         updateNextPreview();
         canDrop = true;
-        isDropping = false;
     }
 
     function resolveCollisions() {
         for (let i = 0; i < balls.length; i++) {
             for (let j = i + 1; j < balls.length; j++) {
-                let b1 = balls[i];
-                let b2 = balls[j];
-
+                let b1 = balls[i]; let b2 = balls[j];
                 if (b1.isStatic || b2.isStatic || b1.markedForDeletion || b2.markedForDeletion) continue;
 
                 let dx = b2.x - b1.x;
@@ -508,138 +449,80 @@
 
                 if (distSq < minDist * minDist) {
                     let dist = Math.sqrt(distSq);
-                    
-                    // MERGE ЛОГІКА
                     if (b1.level === b2.level && b1.level < levels.length - 1) {
-                        b1.markedForDeletion = true;
-                        b2.markedForDeletion = true;
-                        
-                        let midX = (b1.x + b2.x) / 2;
-                        let midY = (b1.y + b2.y) / 2;
-                        
-                        let newBall = new Ball(midX, midY, b1.level + 1);
+                        b1.markedForDeletion = true; b2.markedForDeletion = true;
+                        let newBall = new Ball((b1.x+b2.x)/2, (b1.y+b2.y)/2, b1.level + 1);
                         newBall.vx = (b1.vx + b2.vx) * 0.5;
-                        newBall.vy = (b1.vy + b2.vy) * 0.5 - 2; // Легкий підскок при злитті
-                        
+                        newBall.vy = (b1.vy + b2.vy) * 0.5 - 2;
                         balls.push(newBall);
                         addScore(levels[newBall.level].val);
                         continue;
                     }
-
-                    // Розштовхування (Physics Resolution)
                     if (dist === 0) { dx = 1; dy = 0; dist = 1; }
                     let overlap = minDist - dist;
-                    let nx = dx / dist;
-                    let ny = dy / dist;
-
-                    let m1 = b1.r * b1.r; 
-                    let m2 = b2.r * b2.r;
-                    let totalM = m1 + m2;
-                    let r1 = m2 / totalM;
-                    let r2 = m1 / totalM;
-
-                    b1.x -= nx * overlap * r1;
-                    b1.y -= ny * overlap * r1;
-                    b2.x += nx * overlap * r2;
-                    b2.y += ny * overlap * r2;
-
-                    // Зміна швидкостей
-                    let kx = b1.vx - b2.vx;
-                    let ky = b1.vy - b2.vy;
+                    let nx = dx / dist; let ny = dy / dist;
+                    let totalM = (b1.r*b1.r) + (b2.r*b2.r);
+                    b1.x -= nx * overlap * ((b2.r*b2.r)/totalM);
+                    b1.y -= ny * overlap * ((b2.r*b2.r)/totalM);
+                    b2.x += nx * overlap * ((b1.r*b1.r)/totalM);
+                    b2.y += ny * overlap * ((b1.r*b1.r)/totalM);
+                    let kx = b1.vx - b2.vx; let ky = b1.vy - b2.vy;
                     let p = 2 * (nx * kx + ny * ky) / totalM;
-
-                    b1.vx -= p * m2 * RESTITUTION * nx;
-                    b1.vy -= p * m2 * RESTITUTION * ny;
-                    b2.vx += p * m1 * RESTITUTION * nx;
-                    b2.vy += p * m1 * RESTITUTION * ny;
+                    b1.vx -= p * (b2.r*b2.r) * RESTITUTION * nx;
+                    b1.vy -= p * (b2.r*b2.r) * RESTITUTION * ny;
+                    b2.vx += p * (b1.r*b1.r) * RESTITUTION * nx;
+                    b2.vy += p * (b1.r*b1.r) * RESTITUTION * ny;
                 }
             }
         }
-        
         balls = balls.filter(b => !b.markedForDeletion);
     }
 
     function checkGameOver() {
         if (isGameOver) return;
-        
-        // Лінія програшу (верхні 100 пікселів)
-        const deathLine = 100;
-        
-        // Перевіряємо чи є кульки, що зупинилися над лінією
+        const deathLine = 80;
         for (let b of balls) {
-            if (!b.isStatic && b.y - b.r < deathLine && Math.abs(b.vy) < 1 && Math.abs(b.vx) < 1) {
-                // Якщо кулька спокійно лежить вище лінії -> програш
-                // Даємо невелику затримку щоб не вбивало відразу при падінні
+            if (!b.isStatic && b.y - b.r < deathLine && Math.abs(b.vy) < 1) {
                 if (!b.dangerTime) b.dangerTime = Date.now();
-                if (Date.now() - b.dangerTime > 1500) {
-                    gameOver();
-                    return;
-                }
-            } else {
-                b.dangerTime = null;
-            }
+                if (Date.now() - b.dangerTime > 1500) { gameOver(); return; }
+            } else { b.dangerTime = null; }
         }
     }
 
     function draw() {
         ctx.clearRect(0, 0, width, height);
-
-        // Лінія програшу
-        ctx.save();
         ctx.beginPath();
-        ctx.moveTo(0, 100);
-        ctx.lineTo(width, 100);
-        ctx.strokeStyle = 'rgba(255, 0, 85, 0.5)';
-        ctx.lineWidth = 3;
-        ctx.setLineDash([15, 10]);
-        ctx.stroke();
-        ctx.restore();
+        ctx.moveTo(0, 80); ctx.lineTo(width, 80);
+        ctx.strokeStyle = 'rgba(255, 0, 85, 0.3)';
+        ctx.setLineDash([10, 10]); ctx.stroke();
 
-        // Малюємо кульки
-        for (let b of balls) {
-            b.draw(ctx);
-        }
+        for (let b of balls) b.draw(ctx);
 
-        // Малюємо кульку, що зараз керується (зверху)
         if (canDrop && !isGameOver) {
             const dropR = levels[currentDropLevel].r;
-            // Обмежуємо X щоб кулька не вилізла за стіни
             currentDropX = Math.max(dropR, Math.min(width - dropR, currentDropX));
-            
-            // Направляючий промінь
             ctx.beginPath();
-            ctx.moveTo(currentDropX, 50);
-            ctx.lineTo(currentDropX, height);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([10, 10]);
-            ctx.stroke();
-            
-            let guideBall = new Ball(currentDropX, 50, currentDropLevel, true);
-            guideBall.draw(ctx);
+            ctx.moveTo(currentDropX, 40); ctx.lineTo(currentDropX, height);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.setLineDash([5, 5]); ctx.stroke();
+            new Ball(currentDropX, 40, currentDropLevel, true).draw(ctx);
         }
     }
 
     function update() {
         if (isGameOver) return;
-
-        // Оновлюємо фізику кілька разів за кадр для стабільності
-        const subSteps = 4;
-        for (let i = 0; i < subSteps; i++) {
+        for (let i = 0; i < 4; i++) {
             for (let b of balls) b.update();
             resolveCollisions();
         }
-
         checkGameOver();
     }
 
     function gameLoop() {
-        update();
-        draw();
+        update(); draw();
         animationFrameId = requestAnimationFrame(gameLoop);
     }
 
-    // Управління
     function handleMove(clientX) {
         if (!canDrop || isGameOver) return;
         const rect = canvas.getBoundingClientRect();
@@ -648,41 +531,17 @@
 
     function handleDrop() {
         if (!canDrop || isGameOver) return;
-        
         canDrop = false;
-        isDropping = true;
-        
         const dropR = levels[currentDropLevel].r;
-        let startX = Math.max(dropR, Math.min(width - dropR, currentDropX));
-        
-        let newBall = new Ball(startX, 50, currentDropLevel);
-        balls.push(newBall);
-        
-        // Затримка перед наступною кулькою
-        setTimeout(spawnNextDrop, 1000);
+        balls.push(new Ball(Math.max(dropR, Math.min(width - dropR, currentDropX)), 40, currentDropLevel));
+        setTimeout(spawnNextDrop, 800);
     }
 
-    // Touch events
-    canvas.addEventListener('touchstart', (e) => {
-        handleMove(e.touches[0].clientX);
-    });
-    canvas.addEventListener('touchmove', (e) => {
-        handleMove(e.touches[0].clientX);
-    });
-    canvas.addEventListener('touchend', (e) => {
-        handleDrop();
-    });
-
-    // Mouse fallback
-    canvas.addEventListener('mousemove', (e) => {
-        handleMove(e.clientX);
-    });
-    canvas.addEventListener('mousedown', (e) => {
-        handleMove(e.clientX);
-    });
-    canvas.addEventListener('mouseup', (e) => {
-        handleDrop();
-    });
+    canvas.addEventListener('touchstart', (e) => handleMove(e.touches[0].clientX));
+    canvas.addEventListener('touchmove', (e) => handleMove(e.touches[0].clientX));
+    canvas.addEventListener('touchend', handleDrop);
+    canvas.addEventListener('mousemove', (e) => handleMove(e.clientX));
+    canvas.addEventListener('mouseup', handleDrop);
 
     function addScore(points) {
         score += points;
@@ -696,15 +555,12 @@
 
     function resetGame() {
         cancelAnimationFrame(animationFrameId);
-        balls = [];
-        score = 0;
-        document.getElementById('score').innerText = score;
+        balls = []; score = 0;
+        document.getElementById('score').innerText = 0;
         isGameOver = false;
         gameOverEl.style.display = 'none';
-        
         nextDropLevel = generateRandomLevel();
         spawnNextDrop();
-        
         gameLoop();
     }
 
@@ -719,11 +575,10 @@
         gameOverEl.style.display = 'none';
         gameUiEl.style.display = 'none';
         menuEl.style.display = 'flex';
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
     }
 
-    // Запуск
     initMenu();
-
 </script>
 </body>
 </html>
