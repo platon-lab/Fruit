@@ -1,4 +1,3 @@
-<!-- fruit_merge.html -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -61,10 +60,11 @@
             top: 0; left: 0; width: 100%; height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             z-index: 100;
-            padding: 20px;
+            padding: 30px 20px;
+            overflow-y: auto;
         }
 
         h1 {
@@ -82,6 +82,7 @@
             gap: 15px;
             width: 100%;
             max-width: 350px;
+            padding-bottom: 20px;
         }
 
         .hero-btn {
@@ -125,7 +126,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 8px 15px; /* Зменшено відступи */
+            padding: 8px 15px;
             margin-bottom: 5px;
             z-index: 10;
             border-radius: 15px;
@@ -138,13 +139,13 @@
         }
 
         .score-title {
-            font-size: 0.65rem; /* Зменшено шрифт */
+            font-size: 0.65rem;
             color: #aaa;
             text-transform: uppercase;
         }
 
         .score-value {
-            font-size: 1.2rem; /* Зменшено шрифт */
+            font-size: 1.2rem;
             font-weight: 900;
             color: #0ff;
             text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
@@ -157,7 +158,7 @@
         }
 
         #next-canvas {
-            width: 40px; /* Зменшено превью */
+            width: 40px;
             height: 40px;
             border-radius: 50%;
             background: rgba(0,0,0,0.3);
@@ -257,7 +258,12 @@
 </div>
 
 <script>
-    const heroes = ['Tito.png', 'Smartik.png', 'Junior.png', 'Fil.png', 'Milka.png', 'Bark.png'];
+    const heroes = [
+        'Tito.png', 'Smartik.png', 'Junior.png', 'Fil.png', 'Milka.png', 'Bark.png',
+        'Persik.png', 'Spike.png', 'Alyonka.png', 'Lilu.png', 'Manya.png', 'Liza.png',
+        'Grivna.png', 'Ben.png', 'Goldi.png', 'Raf.png', 'Veles.png', 'Masha.png',
+        'Brilliantik.png', 'Richik.png', 'Shunya.png', 'Baks.png'
+    ];
     
     const levels = [
         { r: 20, val: 2, color: 'rgba(255, 0, 0, 0.4)' },
@@ -296,6 +302,7 @@
     let canDrop = true;
     let animationFrameId;
     let isGameOver = false;
+    let isLineViolated = false;
 
     const GRAVITY = 0.6;
     const RESTITUTION = 0.2;
@@ -319,7 +326,6 @@
             };
 
             btn.onclick = () => {
-                // ПОВНОЕКРАННИЙ РЕЖИМ ПРИ СТАРТІ[cite: 1]
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen().catch(e => console.log(e));
                 }
@@ -359,6 +365,7 @@
             this.vx = 0; this.vy = 0;
             this.isStatic = isStatic;
             this.markedForDeletion = false;
+            this.dangerTime = null;
         }
 
         draw(context, x = this.x, y = this.y) {
@@ -425,7 +432,7 @@
     function updateNextPreview() {
         nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
         const dummyBall = new Ball(nextCanvas.width/2, nextCanvas.height/2, nextDropLevel, true);
-        dummyBall.r = 15; // Маленький розмір для малого UI
+        dummyBall.r = 15;
         dummyBall.draw(nextCtx);
     }
 
@@ -481,20 +488,33 @@
     function checkGameOver() {
         if (isGameOver) return;
         const deathLine = 80;
+        let violated = false;
         for (let b of balls) {
             if (!b.isStatic && b.y - b.r < deathLine && Math.abs(b.vy) < 1) {
+                violated = true;
                 if (!b.dangerTime) b.dangerTime = Date.now();
                 if (Date.now() - b.dangerTime > 1500) { gameOver(); return; }
             } else { b.dangerTime = null; }
         }
+        isLineViolated = violated;
     }
 
     function draw() {
         ctx.clearRect(0, 0, width, height);
+        
         ctx.beginPath();
         ctx.moveTo(0, 80); ctx.lineTo(width, 80);
-        ctx.strokeStyle = 'rgba(255, 0, 85, 0.3)';
-        ctx.setLineDash([10, 10]); ctx.stroke();
+        if (isLineViolated) {
+            ctx.strokeStyle = `rgba(255, 0, 85, ${0.6 + 0.4 * Math.sin(Date.now() / 100)})`;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([]);
+        } else {
+            ctx.strokeStyle = 'rgba(255, 0, 85, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([10, 10]);
+        }
+        ctx.stroke();
+        ctx.lineWidth = 1;
 
         for (let b of balls) b.draw(ctx);
 
@@ -558,6 +578,7 @@
         balls = []; score = 0;
         document.getElementById('score').innerText = 0;
         isGameOver = false;
+        isLineViolated = false;
         gameOverEl.style.display = 'none';
         nextDropLevel = generateRandomLevel();
         spawnNextDrop();
